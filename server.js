@@ -23,8 +23,8 @@ app.use(cors());
 app.post("/convert", async (req, res) => {
   let csvText = String(req.body.csvText ?? "");
 
-  const resp = await fetch("http://localhost:5000", {method: "GET"});
-  console.log(await resp.json())
+  const resp = await fetch("http://localhost:5000", { method: "GET" });
+  console.log(await resp.json());
   if (!csvText.includes("\n")) {
     // tenta recuperar quando veio tudo em uma linha com espaços
     // (assumindo que cada linha começa com número ou com o header)
@@ -114,6 +114,16 @@ app.post("/convert", async (req, res) => {
   //       details: err?.message ?? String(err),
   //     });
   //   }
+});
+
+app.get("/", (req, res) => res.json({ ok: true }));
+
+app.use((err, req, res, next) => {
+  console.error("ERRO:", err);
+  res.status(500).json({
+    error: "Internal Server Error",
+    details: String(err?.message ?? err),
+  });
 });
 
 const port = process.env.PORT || 3000;
