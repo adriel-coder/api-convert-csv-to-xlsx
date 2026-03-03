@@ -38,9 +38,6 @@ app.post("/convert", async (req, res) => {
   const oldName = wb.SheetNames[0];
   const newName = "Planilha";
 
-  const ws0 = wb.Sheets[wb.SheetNames[0]];
-  console.log("RANGE:", ws0?.["!ref"]); // esperado: A1:E4
-
   wb.Sheets[newName] = wb.Sheets[oldName];
   delete wb.Sheets[oldName];
   wb.SheetNames[0] = newName;
