@@ -23,8 +23,6 @@ app.use(cors());
 app.post("/convert", async (req, res) => {
   let csvText = String(req.body.csvText ?? "");
 
-  const resp = await fetch("http://localhost:5000", { method: "GET" });
-  console.log(await resp.json());
   if (!csvText.includes("\n")) {
     // tenta recuperar quando veio tudo em uma linha com espaços
     // (assumindo que cada linha começa com número ou com o header)
@@ -56,7 +54,7 @@ app.post("/convert", async (req, res) => {
   // 5) Data URI (muito aceito em campos FILE)
   const fileDataUri = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${xlsxBase64}`;
 
-  res.json({ fileDataUri, resp });
+  res.json({ fileDataUri });
 
   //   try {
   //     const {
